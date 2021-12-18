@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../ethereum"
+		},
+		{
+			"path": "../../ethereum/solidity"
+		}
+	],
+	"settings": {}
+}
