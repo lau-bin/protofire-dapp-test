@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npx tsc --build --watch",
+    "start": "node build/server.js"
+  },
+  "author": "Lautaro C",
+  "dependencies": {
+    "@hapi/hapi": "^20.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "@types/hapi__hapi": "^20.0.10"
+  }
+}
