@@ -7,14 +7,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// @author Lautaro C
 contract Register is Ownable{
 
-  mapping (uint16 => string) public teams;
+  mapping (uint => string) public teams;
   uint teamIndex;
   uint tournamentIndex;
   uint matchId;
   uint deletionTimeframeMaxMinutes;
 
   event RegisterMatch(uint indexed tournamentId, uint data);
-  event RegisterTeam(uint indexed id, string name);
   event Registertournament(uint id, string name);
   event DeleteMatch(uint indexed tournamentId, uint id);
 
@@ -38,17 +37,17 @@ contract Register is Ownable{
   function registerMatch(uint data) external onlyOwner {
     require(matchId < 0x100000000000000000000000000000000, "limit of registrations reached (2^128)");
 
-    uint team1Id = (data&uint(0x3FFFC0000))>>18;
-    uint team2Id = (data&uint(0x3FFFC))>>2;
+    uint team1Id = (data&uint(0x3FFFFFFFC00000000))>>34;
+    uint team2Id = (data&uint(0x3FFFFFFFC))>>2;
     uint winner = data&uint(0x3);
-    uint tournamentId = data>>34;
+    uint tournamentId = data>>66;
     uint result;
 
     require(team1Id < 0x100000000, "team1 id too big");
     require(team2Id < 0x100000000, "team2 id too big");
     require(winner < 3, "wrong winner data");
     require(tournamentId < 0x100000000, "tournament id too big");
-    result = (matchId++)<<128;
+    result = (matchId++)<<60;
     if (winner == 1){
       result = team1Id;
       result = result<<2;
@@ -81,13 +80,13 @@ contract Register is Ownable{
   /// @notice can only be called by the owner
   function registerTeam(string calldata name) external onlyOwner {
     require(teamIndex < 0x100000000, "limit of team registrations reached (2^32)");
-    emit RegisterTeam(teamIndex++, name);
+    teams[teamIndex++] = name;
   }
 
   /// @param name string, the name of the tournament
   /// @notice can only be called by the owner
   function registertournament(string calldata name) external onlyOwner {
-    require(teamIndex < 0x100000000, "limit of tournament registrations reached (2^32)");
+    require(tournamentIndex < 0x100000000, "limit of tournament registrations reached (2^32)");
     emit Registertournament(tournamentIndex++, name);
   }
 
