@@ -8,13 +8,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Register is Ownable{
 
   mapping (uint => string) public teams;
+  mapping (uint => string) public tournaments;
   uint teamIndex;
   uint tournamentIndex;
   uint matchId;
   uint deletionTimeframeMaxMinutes;
 
   event RegisterMatch(uint indexed tournamentId, uint data);
-  event Registertournament(uint id, string name);
   event DeleteMatch(uint indexed tournamentId, uint id);
 
   /// @param deletionTimeframe uint, set the timeframe in minutes where a match result can be deleted
@@ -87,7 +87,7 @@ contract Register is Ownable{
   /// @notice can only be called by the owner
   function registertournament(string calldata name) external onlyOwner {
     require(tournamentIndex < 0x100000000, "limit of tournament registrations reached (2^32)");
-    emit Registertournament(tournamentIndex++, name);
+    tournaments[tournamentIndex++] = name;
   }
 
 }
