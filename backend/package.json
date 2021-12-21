@@ -8,10 +8,13 @@
   },
   "author": "Lautaro C",
   "dependencies": {
-    "@hapi/hapi": "^20.2.1"
+    "typescript": "^4.5.4",
+    "@hapi/hapi": "^20.2.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.6.0",
+    "web3": "^1.6.1"
   },
   "devDependencies": {
-    "typescript": "^4.5.4",
     "@types/hapi__hapi": "^20.0.10"
   }
 }

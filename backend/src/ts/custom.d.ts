@@ -1,0 +1,1 @@
+type Integer = number & Symbol

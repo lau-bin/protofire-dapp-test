@@ -1,8 +1,8 @@
-export default interface TableDTO{
-  rows: Row[]
+export default class Table{
+  rows: Row[] = []
 }
 
-interface Row{
+export interface Row{
   position: number,
   team: string,
   points: number,
