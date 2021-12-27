@@ -3,5 +3,5 @@ var register = artifacts.require("Register")
 
 module.exports = function(deployer) {
   // deployer.deploy(ownable)
-  deployer.deploy(register)
+  deployer.deploy(register, 21600)
 };
