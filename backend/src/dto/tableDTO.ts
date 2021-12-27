@@ -1,5 +1,6 @@
-export default interface TableDTO{
-  rows: Row[]
+export interface TableDTO {
+  table: Row[],
+  lastUpdate: number
 }
 
 interface Row{

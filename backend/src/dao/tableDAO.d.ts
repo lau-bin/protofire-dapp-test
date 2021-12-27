@@ -1,10 +1,16 @@
-import TableDTO from "../dto/tableDTO";
 import {AbiItem} from "web3-utils";
 
+
 export interface TableDAO{
-  getLastUpdate: ()=>Date | null,
-  setUpdateInterval: (millis:Integer)=>void,
-  getTable: ()=>TableDTO
+  getMatchData: (tournamentId: number, from_block: number, limit: number)=> Promise<MatchData>
+  getDeletedMatches: (tournamentId: number, from_block: number, limit: number)=> Promise<BigInt[]>
+  getLastTournamentId: ()=> Promise<number>
+  getTournamentName: (id:number)=> Promise<string>
+  getTeamNames: (ids:number[]) => Promise<{names: string[], ids: number[]}>
+  getTeamName: (id:number) => Promise<string>
+  getMaxTimeframeForUpdate: ()=> Promise<number>
+  getLastBlock: ()=>Promise<number>
+  getLastMatchId: ()=>Promise<BigInt>
 }
 
 export interface TableDAOConfig{
@@ -13,6 +19,19 @@ export interface TableDAOConfig{
   gasMax: Integer,
   gasPrice: string,
   ctrRegisterInterface: AbiItem,
-  updateInterval: Integer,
   provider: string
 }
+
+export type MatchData = {
+  id: number,
+  matches: Array<{
+    id: BigInt,
+    data: Array<{
+      score: number,
+      id: number
+    }>
+  }>
+}
+
+
+

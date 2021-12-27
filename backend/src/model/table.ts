@@ -1,5 +1,8 @@
-export default class Table{
-  rows: Row[] = []
+import { TableDTO } from "../dto/tableDTO";
+
+export interface Table{
+  getTable: ()=> TableDTO | null
+  update: (tournamentId: number)=> Promise<void>
 }
 
 export interface Row{

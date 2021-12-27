@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "npx tsc --build --watch",
-    "start": "node build/server.js"
+    "start": "export $(cat test/test.env | grep \"^[^#;]\" |xargs) && node build/main.js"
   },
   "author": "Lautaro C",
   "dependencies": {
@@ -12,7 +12,8 @@
     "@hapi/hapi": "^20.2.1",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.6.0",
-    "web3": "^1.6.1"
+    "web3": "1.6.1",
+    "bn.js": "^4.11.9"
   },
   "devDependencies": {
     "@types/hapi__hapi": "^20.0.10"
