@@ -1,5 +1,5 @@
 import { TableDAOConfig } from "./dao/tableDAO";
-import { assert, isInteger } from "./util";
+import { assert, isInteger, unwrap } from "./util";
 import {isAddress} from "web3-utils";
 import {injectable} from "tsyringe";
 import { ControlerConfig } from "./controler/controlerConfig";
@@ -16,10 +16,10 @@ export class DAOConfig implements TableDAOConfig{
 
   constructor(){
     let ctrInterface = JSON.parse(fs.readFileSync(process.env.CTR_REGISTER_INTERFACE!, {encoding: "utf-8"}));
-    let ctrAddress = process.env.CONTRACT_ADDRESS!;
-    let fromAddress = process.env.FROM_ADDRESS!
-    let gasMax = Number.parseInt(process.env.GAS_MAX!)
-    let provider = process.env.WEB3_PROVIDER!;
+    let ctrAddress = unwrap(process.env.CONTRACT_ADDRESS);
+    let fromAddress = unwrap(process.env.FROM_ADDRESS);
+    let gasMax = Number.parseInt(unwrap(process.env.GAS_MAX));
+    let provider = unwrap(process.env.WEB3_PROVIDER);
   
     assert(isInteger(gasMax), "gas max is not an integer");
     assert(isAddress(ctrAddress), "contract address has wrong format");
@@ -39,8 +39,8 @@ export class ControlerConfigImpl implements ControlerConfig {
   updateInterval;
   oldUpdateMillis;
   constructor(){
-    let updateInterval = Number.parseInt(process.env.CTR_UPDATE_INTERVAL!)
-    let oldUpdateMillis = Number.parseInt(process.env.OLD_UPDATE_MILLIS!)
+    let updateInterval = Number.parseInt(unwrap(process.env.CTR_UPDATE_INTERVAL))
+    let oldUpdateMillis = Number.parseInt(unwrap(process.env.OLD_UPDATE_MILLIS))
 
     assert(isInteger(updateInterval), "update interval is not an integer")
     assert(isInteger(oldUpdateMillis), "old update millis is not an integer")

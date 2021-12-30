@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "build": "npx tsc --build --watch",
-    "start": "export $(cat test/test.env | grep \"^[^#;]\" |xargs) && node build/main.js"
+    "start": "set -o allexport && source tests/test.env && set +o allexport && node build/main.js",
+    "test:unit": "tests/test.sh",
+    "test:integration": "tests/test.sh int"
   },
   "author": "Lautaro C",
   "dependencies": {
@@ -16,6 +18,11 @@
     "bn.js": "^4.11.9"
   },
   "devDependencies": {
-    "@types/hapi__hapi": "^20.0.10"
+    "@types/hapi__hapi": "^20.0.10",
+    "jest": "^27.4.5",
+    "@types/jest": "^27.0.3",
+    "ts-jest": "^27.1.2",
+    "jest-extended": "^1.2.0",
+    "ganache-core": "^2.13.2"
   }
 }

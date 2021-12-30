@@ -1,6 +1,6 @@
 import { TableDAO, TableDAOConfig } from "./tableDAO";
 import Eth from "web3-eth";
-import Web3 from "web3"
+import Web3 from "web3";
 import {singleton, inject, injectable} from "tsyringe";
 import { assert, stringType } from "../util";
 import BN from "bn.js";
@@ -59,7 +59,7 @@ export class TableDAOImpl implements TableDAO{
       names
     }
   }
-  async getTeamName(id: number){
+  async getTeamName(id: number): Promise<string> {
     return await this.contract.methods.teams().call(id);
   }
   
@@ -75,7 +75,7 @@ export class TableDAOImpl implements TableDAO{
     });
     let data = events.map(e=>{
       assert(typeof e.returnValues.data === stringType, "getMatchData event must be string");
-      let data = BigInt("0" + e.returnValues.data);
+      let data = BigInt("0x0" + (e.returnValues.data as string).substring(2));
       let matchId = data>>BigInt(128);
       let team1Data = data&BigInt("0xFFFFFFFFC00000000");
       let team1Id = Number(team1Data>>BigInt(36));
