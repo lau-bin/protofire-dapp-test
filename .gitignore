@@ -6,6 +6,7 @@ build/
 !/backend/node_modules/web3*/types/
 /backend/node_modules/web3*/types/*
 !/backend/node_modules/web3*/types/*.ts
+/front/node_modules/
 package-lock.json
 *.code-workspace
 .vscode

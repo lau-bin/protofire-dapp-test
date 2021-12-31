@@ -5,8 +5,8 @@
   "scripts": {
     "build": "npx tsc --build --watch",
     "start": "set -o allexport && source tests/test.env && set +o allexport && node build/main.js",
-    "test:unit": "tests/test.sh",
-    "test:integration": "tests/test.sh int"
+    "test:unit": "set -o allexport && source tests/test.env && set +o allexport && jest unit",
+    "test:integration": "set -o allexport && source tests/test.env && set +o allexport && jest int"
   },
   "author": "Lautaro C",
   "dependencies": {
