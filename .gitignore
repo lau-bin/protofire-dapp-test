@@ -1,5 +1,17 @@
 build/
+<<<<<<< Updated upstream
 node_modules/
+=======
+/contract/node_modules/
+/backend/node_modules/*
+!/backend/node_modules/web3*/
+/backend/node_modules/web3*/*
+!/backend/node_modules/web3*/types/
+/backend/node_modules/web3*/types/*
+!/backend/node_modules/web3*/types/*.ts
+/front/node_modules/
+/front/dist/
+>>>>>>> Stashed changes
 package-lock.json
 *.code-workspace
 .vscode
