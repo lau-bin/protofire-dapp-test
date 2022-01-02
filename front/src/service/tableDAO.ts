@@ -2,40 +2,23 @@ import { Service } from "modules/framework/framework";
 import { TableDTO } from "../../../backend/src/dto/tableDTO";
 import { ViewDTO } from "../../../backend/src/dto/viewDTO";
 
-export class TableProvider implements Service{
+export class TableProvider {
 
   private running = false;
   private table: TableDTO | null = null;
   constructor(private uri: string){
-    this.start();
-  }
-  start(): void {
-    if (!this.running){
-      this.running = true;
-      this.run();
-    }
-  }
-  stop(): void {
-    
   }
 
-  private run(){
-    window.setTimeout( async ()=>{
-      try{
-        let response = await this.fetch();
-        console.log(response)
-        // this.table = buildTable(response.body);
-      }
-      catch(e){
-        console.log(e)
-      }
-      this.run();
-    }, 15000);
+  async getTable(): Promise<TableDTO>{
+    let data = await this.fetch();
+    let table = this.buildTable(data);
+    return table;
   }
 
-  private buildTable(data: ViewDTO){
-
+  private buildTable(data: ViewDTO): TableDTO{
+    return data as unknown as TableDTO;
   }
+
   private async fetch(){
     let response = await window.fetch(this.uri, {
       method: "GET",
@@ -46,5 +29,6 @@ export class TableProvider implements Service{
     });
 
     console.log(response.body)
+    return (await response.json()) as ViewDTO;
   }
 }

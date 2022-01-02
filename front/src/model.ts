@@ -1,14 +1,13 @@
 import { TableDTO } from "../../backend/src/dto/tableDTO"
 import { BaseModel, BuildClosedModel, PublicStoreValues, ClosedModel } from "../modules/sam"
 import { TABLE_API_URI } from "./constants";
-import {TableProvider} from "./service/tableProvider";
+import {TableProvider} from "./service/tableDAO";
 
 class GeneralModel extends BaseModel {
 
   constructor(){
     super();
-    this.privateStore.tableProvider = new TableProvider(TABLE_API_URI);
-    this.privateStore.tableProvider.start();
+    this.nextAction();
   }
 
   publicStore = {
@@ -36,11 +35,28 @@ class GeneralModel extends BaseModel {
   }
 
   nextAction() {
-
+    if (this.privateStore.tableProvider == null){
+      this.privateStore.tableProvider = new TableProvider(TABLE_API_URI);
+      tableRecursive(this.privateStore.tableProvider);
+    }
   }
 }
-export const appModelOpen = new GeneralModel();
-export const appModel = BuildClosedModel(appModelOpen);
+
+
+var appModelOpen: GeneralModel | null = null;
+var closedModel: ClosedModel<BaseModel> | null = null;
+export function getAppModel(){
+  if (closedModel == null){
+    closedModel = BuildClosedModel(getAppModelOpen());
+  }
+  return closedModel;
+}
+export function getAppModelOpen(){
+  if (appModelOpen == null){
+    appModelOpen = new GeneralModel();
+  }
+  return appModelOpen;
+}
 export type Model = ClosedModel<GeneralModel>
 function nullish(el:any): el is {} {
   if (el != null && el != undefined){
@@ -53,3 +69,12 @@ function nullish(el:any): el is {} {
 interface PrivateStore {
   tableProvider: TableProvider | null
 } 
+
+
+const tableRecursive = async (service: TableProvider) => {
+  let table = await service.getTable();
+  appModelOpen!.present({table: table})
+  setTimeout(() => {
+    tableRecursive(service)
+  }, 15000);
+}
