@@ -35,6 +35,7 @@ export class TableImpl implements Table{
       this.lastBlock = 0;
       this.lastMatchId = BigInt(-1);
     }
+    // clone model to discard update on errors
     let rowsClone = new Map(this.rows);
     let rowsOrderClone = Array.from(this.rowsOrder);
     let lastMatch = await this.tableDAO.getLastMatchId();
@@ -46,6 +47,7 @@ export class TableImpl implements Table{
     let lastBlock = await this.tableDAO.getLastBlock();
     // only store the table of a single tournament
 
+    // get all matches in batches to prevent throttle errors
     let matchData: MatchData[] = [];
     let block = {val:this.lastBlock};
     while (block.val < lastBlock){
@@ -53,6 +55,7 @@ export class TableImpl implements Table{
       let result = await Promise.all(requestArr);
       matchData = matchData.concat(result);
     }
+    // get all deleted matches
     let deletedMatchData: BigInt[][] = [];
     block.val = this.lastBlock;
     while (block.val < lastBlock){
@@ -62,6 +65,8 @@ export class TableImpl implements Table{
     }
     let flatDeletedMatchData = deletedMatchData.flat(1);
     let idsToGet: number[] = []
+
+    // build table
     matchData.forEach(m=>{
       m.matches.forEach(mm=>{
         if (mm.id >= this.lastMatchId){
@@ -75,13 +80,11 @@ export class TableImpl implements Table{
         }
       });
     });
-<<<<<<< HEAD
-    
-=======
+    // set team position from mirrored array
     rowsOrderClone.forEach((id, index)=>{
       rowsClone.get(id)!.position = index;
     })
->>>>>>> develop
+    // get missing team names from rpc
     let counter = 0;
     let idsCounter = 0;
     while(idsCounter < idsToGet.length){
@@ -92,6 +95,7 @@ export class TableImpl implements Table{
         idsCounter += length;
       }
       let result = await Promise.all(requests);
+      // set team names in table
       result.forEach(res=>{
         for (let i = 0; i < res.ids.length; i++){
           rowsClone.get(res.ids[i])!.team = res.names[i];
@@ -99,6 +103,7 @@ export class TableImpl implements Table{
       })
       counter = 0;
     }
+    // if there wasnt an error the updated data is persisted on the model
     this.lastMatchId = lastMatch;
     this.lastUpdated = Date.now()
     this.lastBlock = lastBlock;
@@ -106,6 +111,7 @@ export class TableImpl implements Table{
     this.rowsOrder = rowsOrderClone;
   }
 
+  // creates rpc event requests in 10 batches of 100.000 blocks
   private createCalls<T extends keyof Pick<TableDAO, "getDeletedMatches" | "getMatchData">>(method: T, lastBlock: number, tournamentId: number, block:{val:number}): ReturnType<TableDAO[T]>[]{
     let requestArr: any[] = [];
     let counter = 0;
@@ -126,18 +132,13 @@ export class TableImpl implements Table{
     return requestArr;
   }
 }
-
+// builds the table
 function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]["data"], rows: TableImpl["rows"], rowsOrder: TableImpl["rowsOrder"]) {
   let teamData1 = teamData[0];
   let team1 = rows.get(teamData1.id);
   if (team1){
     team1.points += teamData1.score;
-<<<<<<< HEAD
-    let position = orderByScore(teamData1.id, team1.points, rowsOrder, rows, true);
-    team1.position = position;
-=======
     orderByScore(teamData1.id, team1.points, rowsOrder, rows, true);
->>>>>>> develop
   } 
   else{
     team1 = {} as Row;
@@ -145,15 +146,9 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
     team1.playedGames = 0;
     team1.lostGames = 0;
     team1.wonGames = 0;
-<<<<<<< HEAD
-    rows.set(teamData1.id, team1);
-    let position = orderByScore(teamData1.id, teamData1.score, rowsOrder, rows, false);
-    team1.position = position;
-=======
     team1.drawGames = 0;
     rows.set(teamData1.id, team1);
     orderByScore(teamData1.id, teamData1.score, rowsOrder, rows, false);
->>>>>>> develop
     idsToGet.push(teamData1.id);
   }
 
@@ -161,12 +156,7 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
   let team2 = rows.get(teamData2.id);
   if (team2){
     team2.points += teamData2.score;
-<<<<<<< HEAD
-    let position = orderByScore(teamData2.id, team2.points, rowsOrder, rows, true);
-    team2.position = position;
-=======
     orderByScore(teamData2.id, team2.points, rowsOrder, rows, true);
->>>>>>> develop
   } 
   else{
     team2 = {} as Row;
@@ -174,15 +164,9 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
     team2.playedGames = 0;
     team2.lostGames = 0;
     team2.wonGames = 0;
-<<<<<<< HEAD
-    rows.set(teamData2.id, team2);
-    let position = orderByScore(teamData2.id, teamData2.score, rowsOrder, rows, false);
-    team2.position = position;
-=======
     team2.drawGames = 0;
     rows.set(teamData2.id, team2);
     orderByScore(teamData2.id, teamData2.score, rowsOrder, rows, false);
->>>>>>> develop
     idsToGet.push(teamData2.id);
   }
   team1.playedGames++;
@@ -202,6 +186,7 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
   }
   
 }
+// calculates the position in the scoreboard using an array where the index is the position
 function orderByScore(id: number, score: number, rowsOrder: TableImpl["rowsOrder"], rows: TableImpl["rows"], isPresent: boolean): number{
   let i = 0;
   if (isPresent){

@@ -6,17 +6,13 @@ import {Controller} from "./controler/tableControler";
 import {server, Server} from "@hapi/hapi";
 import { TableImpl } from "./model/tableImpl";
 import { CacheImpl } from "./cache/cacheImpl";
-
+// exit on unhandled exceptions
 process.on('unhandledRejection', (err) => {
   console.log(err);
   process.exit(1);
 });
-
-<<<<<<< HEAD
-const serverInstance = server({port: 3000, host: 'localhost'});
-=======
+// creates the server object
 const serverInstance = server({port: 4000, host: 'localhost'});
->>>>>>> develop
 
 // configuration
 container.register("TableDAOConfig", {
@@ -36,9 +32,9 @@ container.register("Table", {
   useClass: TableImpl,
 });
 
-// init process
+// builds the api with DI
 const instance = container.resolve(Controller)
-
+// starts the server, it will begin to accept requests
 serverInstance.start()
 .then(ok=>{
 },

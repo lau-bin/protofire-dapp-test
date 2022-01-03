@@ -1,6 +1,7 @@
 import { expect } from "@jest/globals";
 import {MatcherState} from "expect";
 
+// this matcher test that 2 arrays contain the same members regardles of order
 expect.extend({
   toContainSameMembers(array1: Array<any>, array2: Array<any>){
 

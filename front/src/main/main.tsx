@@ -6,29 +6,6 @@ import { Observable } from "rxjs";
 import { ClosedModel } from "modules/sam";
 import cssl from "./main.scss";
 import { css } from '@emotion/css'
-<<<<<<< HEAD
-
-export default class Main extends React.Component {
-
-  btnClass = cssl.btn + " " + cssl["btn-primary"] + " " + css`
-  width: 500px;
-`
-
-    render() {
-      return (
-        <>
-        <button className={this.btnClass}></button>
-        <button className={this.btnClass}></button>
-        <button className={this.btnClass}></button>
-        <button className={this.btnClass}></button>
-        <button className={this.btnClass}></button>
-        <button className={this.btnClass}></button>
-
-
-        </>
-      )
-    }
-=======
 import { getAppModel } from "../model";
 import { ViewDTO } from "../../../backend/src/dto/viewDTO";
 import background from "resources/background.png";
@@ -142,7 +119,6 @@ export default class Main extends React.Component<any, {table: ViewDTO | undefin
 
   
 
->>>>>>> develop
 }
 
 

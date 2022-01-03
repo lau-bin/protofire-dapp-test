@@ -9,5 +9,5 @@ ReactDOM.render(
   <Main />,
   document.getElementById('root')
 );
-
+// this dapp uses the SAM pattern
 const appModel = getAppModel();

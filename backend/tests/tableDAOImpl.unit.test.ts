@@ -1,13 +1,14 @@
 import { MatchData, TableDAO } from "../src/dao/tableDAO";
-import { TableDAOImpl } from "src/dao/tableDAOImpl";
+import { TableDAOImpl } from "../src/dao/tableDAOImpl";
 import { test, expect, jest, beforeEach } from "@jest/globals";
 import Eth from "web3-eth";
 import Web3 from "web3";
-import { DAOConfig } from "src/config";
+import { DAOConfig } from "../src/config";
 import { inject, injectable, singleton } from "tsyringe";
 import BN from "bn.js";
 import "tests/custom.matchers";
 
+// all web3 rpc used methods are mocked with test values
 jest.mock('web3-eth', () => {
   return jest.fn().mockImplementation(() => {
     return {

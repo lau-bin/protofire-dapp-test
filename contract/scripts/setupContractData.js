@@ -27,7 +27,7 @@ async function registerTeams() {
   await register.registerTeam("team 2")
   await register.registerTeam("team 1")
 }
-
+// sets test data for integration tests
 module.exports = async function(c){
   await registerTorunaments();
   await registerTeams();

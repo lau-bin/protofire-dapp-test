@@ -27,12 +27,6 @@ export class Controller {
                 this.updateError && error.push("UpdateFailed");
                 table == null && error.push("NotReady");
                 table?.lastUpdate && table.lastUpdate < Date.now() - config.oldUpdateMillis && error.push("OldUpdate");
-<<<<<<< HEAD
-                let response: ViewDTO = {
-                    table,
-                    error
-                };
-=======
                 let body: ViewDTO = {
                     table,
                     error
@@ -41,6 +35,7 @@ export class Controller {
                 return response;
             }
         });
+        // preflight data to allow cors
         server.route({
             method: 'OPTIONS',
             path: '/results',
@@ -49,12 +44,11 @@ export class Controller {
                 response.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
                 response.header("Access-Control-Allow-Headers", "Content-Type");
                 response.header("Access-Control-Max-Age", "30");
->>>>>>> develop
                 return response;
             }
         });
     }
-
+    // recursive function to update table from blockchain 
     private updateTable(){
         try{
             this.table.update(0)

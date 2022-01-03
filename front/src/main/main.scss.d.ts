@@ -1,10 +1,5 @@
 declare namespace MainScssNamespace {
   export interface IMainScss {
-<<<<<<< HEAD
-    active: string;
-    btn: string;
-    "btn-check": string;
-=======
     "accordion-body": string;
     "accordion-button": string;
     "accordion-collapse": string;
@@ -196,7 +191,6 @@ declare namespace MainScssNamespace {
     "btn-check": string;
     "btn-close": string;
     "btn-close-white": string;
->>>>>>> develop
     "btn-danger": string;
     "btn-dark": string;
     "btn-group": string;
@@ -221,9 +215,6 @@ declare namespace MainScssNamespace {
     "btn-success": string;
     "btn-toolbar": string;
     "btn-warning": string;
-<<<<<<< HEAD
-    disabled: string;
-=======
     "caption-top": string;
     card: string;
     "card-body": string;
@@ -450,16 +441,11 @@ declare namespace MainScssNamespace {
     "dropdown-menu-xl-start": string;
     "dropdown-menu-xxl-end": string;
     "dropdown-menu-xxl-start": string;
->>>>>>> develop
     "dropdown-toggle": string;
     "dropdown-toggle-split": string;
     dropend: string;
     dropstart: string;
     dropup: string;
-<<<<<<< HEAD
-    "input-group": string;
-    show: string;
-=======
     "end-0": string;
     "end-100": string;
     "end-50": string;
@@ -1770,7 +1756,6 @@ declare namespace MainScssNamespace {
     "w-75": string;
     "w-auto": string;
     "was-validated": string;
->>>>>>> develop
   }
 }
 
