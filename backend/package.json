@@ -4,9 +4,9 @@
   "description": "",
   "scripts": {
     "build": "npx tsc --build --watch",
-    "start": "set -o allexport && source tests/test.env && set +o allexport && node build/main.js",
-    "test:unit": "set -o allexport && source tests/test.env && set +o allexport && jest unit",
-    "test:integration": "set -o allexport && source tests/test.env && set +o allexport && jest int"
+    "start": "export $(cat tests/test.env | grep \"^[^#;]\" |xargs) && node build/main.js",
+    "test:unit": "export $(cat tests/test.env | grep \"^[^#;]\" |xargs) && jest unit",
+    "test:integration": "export $(cat tests/test.env | grep \"^[^#;]\" |xargs) && jest int"
   },
   "author": "Lautaro C",
   "dependencies": {

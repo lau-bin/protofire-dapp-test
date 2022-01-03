@@ -1,16 +1,11 @@
 const ganacheInstance = require("./setupGanache");
 const fs = require("fs");
 const path = require("path");
-const { exec } = require('child_process');
+const { execSync, exec } = require('child_process');
 
 const GANACHE_DB = path.join(".", "scripts", "ganacheDB");
-if (fs.existsSync(GANACHE_DB)){
-  if (fs.existsSync(path.join(GANACHE_DB, "_tmp"))){
-    fs.rmdirSync(path.join(GANACHE_DB, "_tmp"), {force:true});
-  }
-  fs.rmdirSync(GANACHE_DB, {force:true});
-}
-fs.mkdirSync(GANACHE_DB);
+execSync(`rm -rf ${GANACHE_DB}`);
+execSync(`mkdir ${GANACHE_DB}`);
 
 const instance = ganacheInstance.getInstance({
   db_path: GANACHE_DB,
@@ -52,5 +47,6 @@ instance.on("listening", ()=>{
   // instance.close();
 })
 instance.on("exit", ()=>{
+  console.log("Exit")
   deploy.kill();
 })
