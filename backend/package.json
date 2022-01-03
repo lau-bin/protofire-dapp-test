@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npx tsc --build --watch",
+    "start": "export $(cat tests/test.env | grep \"^[^#;]\" |xargs) && node build/main.js",
+    "test:unit": "export $(cat tests/test.env | grep \"^[^#;]\" |xargs) && jest unit",
+    "test:integration": "export $(cat tests/test.env | grep \"^[^#;]\" |xargs) && jest int"
+  },
+  "author": "Lautaro C",
+  "dependencies": {
+    "typescript": "^4.5.4",
+    "@hapi/hapi": "^20.2.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.6.0",
+    "web3": "1.6.1",
+    "bn.js": "^4.11.9"
+  },
+  "devDependencies": {
+    "@types/hapi__hapi": "^20.0.10",
+    "jest": "^27.4.5",
+    "@types/jest": "^27.0.3",
+    "ts-jest": "^27.1.2",
+    "jest-extended": "^1.2.0",
+    "ganache-core": "^2.13.2"
+  }
+}

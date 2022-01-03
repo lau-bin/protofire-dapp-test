@@ -2,13 +2,16 @@
   "name": "contract",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "createTestEnv": "node scripts/setupGanacheTestEnv.js"
+  },
   "author": "Lautaro C",
   "dependencies": {
+    "truffle": "^5.4.24",
     "@openzeppelin/contracts": "^4.4.1"
   },
   "devDependencies": {
-    "truffle": "^5.4.24",
-    "web3": "^1.6.1"
+    "web3": "^1.6.1",
+    "ganache-core": "^2.13.2"
   }
 }
