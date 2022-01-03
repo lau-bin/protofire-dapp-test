@@ -75,7 +75,13 @@ export class TableImpl implements Table{
         }
       });
     });
+<<<<<<< HEAD
     
+=======
+    rowsOrderClone.forEach((id, index)=>{
+      rowsClone.get(id)!.position = index;
+    })
+>>>>>>> develop
     let counter = 0;
     let idsCounter = 0;
     while(idsCounter < idsToGet.length){
@@ -126,8 +132,12 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
   let team1 = rows.get(teamData1.id);
   if (team1){
     team1.points += teamData1.score;
+<<<<<<< HEAD
     let position = orderByScore(teamData1.id, team1.points, rowsOrder, rows, true);
     team1.position = position;
+=======
+    orderByScore(teamData1.id, team1.points, rowsOrder, rows, true);
+>>>>>>> develop
   } 
   else{
     team1 = {} as Row;
@@ -135,9 +145,15 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
     team1.playedGames = 0;
     team1.lostGames = 0;
     team1.wonGames = 0;
+<<<<<<< HEAD
     rows.set(teamData1.id, team1);
     let position = orderByScore(teamData1.id, teamData1.score, rowsOrder, rows, false);
     team1.position = position;
+=======
+    team1.drawGames = 0;
+    rows.set(teamData1.id, team1);
+    orderByScore(teamData1.id, teamData1.score, rowsOrder, rows, false);
+>>>>>>> develop
     idsToGet.push(teamData1.id);
   }
 
@@ -145,8 +161,12 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
   let team2 = rows.get(teamData2.id);
   if (team2){
     team2.points += teamData2.score;
+<<<<<<< HEAD
     let position = orderByScore(teamData2.id, team2.points, rowsOrder, rows, true);
     team2.position = position;
+=======
+    orderByScore(teamData2.id, team2.points, rowsOrder, rows, true);
+>>>>>>> develop
   } 
   else{
     team2 = {} as Row;
@@ -154,9 +174,15 @@ function extractTeamData(idsToGet: number[], teamData: MatchData["matches"][any]
     team2.playedGames = 0;
     team2.lostGames = 0;
     team2.wonGames = 0;
+<<<<<<< HEAD
     rows.set(teamData2.id, team2);
     let position = orderByScore(teamData2.id, teamData2.score, rowsOrder, rows, false);
     team2.position = position;
+=======
+    team2.drawGames = 0;
+    rows.set(teamData2.id, team2);
+    orderByScore(teamData2.id, teamData2.score, rowsOrder, rows, false);
+>>>>>>> develop
     idsToGet.push(teamData2.id);
   }
   team1.playedGames++;
