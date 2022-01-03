@@ -27,10 +27,22 @@ export class Controller {
                 this.updateError && error.push("UpdateFailed");
                 table == null && error.push("NotReady");
                 table?.lastUpdate && table.lastUpdate < Date.now() - config.oldUpdateMillis && error.push("OldUpdate");
-                let response: ViewDTO = {
+                let body: ViewDTO = {
                     table,
                     error
                 };
+                let response = h.response(body).header("Access-Control-Allow-Origin", "*");
+                return response;
+            }
+        });
+        server.route({
+            method: 'OPTIONS',
+            path: '/results',
+            handler: (request, h) => {
+                let response = h.response().header("Access-Control-Allow-Origin", "*");
+                response.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+                response.header("Access-Control-Allow-Headers", "Content-Type");
+                response.header("Access-Control-Max-Age", "30");
                 return response;
             }
         });

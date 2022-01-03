@@ -27,8 +27,8 @@ contract Register is Ownable {
   /// @param _matchId uint
   /// @notice can only be called by the owner
   function deleteMatch(uint _tournamentId, uint _matchId) external onlyOwner {
-    require(_matchId <= matchId, "inexistent match id");
-    require(_tournamentId <= tournamentIndex, "inexistent tournament id");
+    require(_matchId < matchId, "inexistent match id");
+    require(_tournamentId < tournamentIndex, "inexistent tournament id");
     emit DeleteMatch(_tournamentId, _matchId);
   }
 

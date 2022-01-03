@@ -12,7 +12,7 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-const serverInstance = server({port: 3000, host: 'localhost'});
+const serverInstance = server({port: 4000, host: 'localhost'});
 
 // configuration
 container.register("TableDAOConfig", {

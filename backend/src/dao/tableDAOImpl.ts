@@ -55,7 +55,7 @@ export class TableDAOImpl implements TableDAO{
     let names = result["0"];
     let ids: BN[] = result["1"];
     return {
-      ids: ids.map(id=>id.toNumber()),
+      ids: ids.length > 0 && ids[0].toNumber ? ids.map(id => id.toNumber()) : ids.map(id => Number.parseInt(id as unknown as string)),
       names
     }
   }
@@ -75,7 +75,7 @@ export class TableDAOImpl implements TableDAO{
     });
     let data = events.map(e=>{
       assert(typeof e.returnValues.data === stringType, "getMatchData event must be string");
-      let data = BigInt("0x0" + (e.returnValues.data as string).substring(2));
+      let data = BigInt(e.returnValues.data);
       let matchId = data>>BigInt(128);
       let team1Data = data&BigInt("0xFFFFFFFFC00000000");
       let team1Id = Number(team1Data>>BigInt(36));

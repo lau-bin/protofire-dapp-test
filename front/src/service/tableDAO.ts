@@ -9,26 +9,20 @@ export class TableProvider {
   constructor(private uri: string){
   }
 
-  async getTable(): Promise<TableDTO>{
+  async getTable(): Promise<ViewDTO>{
     let data = await this.fetch();
-    let table = this.buildTable(data);
-    return table;
-  }
-
-  private buildTable(data: ViewDTO): TableDTO{
-    return data as unknown as TableDTO;
+    return data;
   }
 
   private async fetch(){
     let response = await window.fetch(this.uri, {
       method: "GET",
       headers: new Headers([
-        ["Content-Type", "text/json"]
+        ["Content-Type", "text/json"],
       ]),
       mode:"cors"
     });
 
-    console.log(response.body)
     return (await response.json()) as ViewDTO;
   }
 }
